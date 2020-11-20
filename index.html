@@ -1,0 +1,68 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <p>A retailer offers a rewards program to its customers, awarding points based on each recorded purchase.</p>
+    <p> A customer receives 2 points for every dollar spent over $100 in each transaction, plus 1 point for every dollar spent over $50 in each transaction (e.g. a $120 purchase = 2x$20 + 1x$50 = 90 points). </p>
+    <p> Given a record of every transaction during a three month period, calculate the reward points earned for each customer per month and total.</p>
+    <br>
+    <hr>
+    <br>
+    <div id="output"></div>
+
+    <script>
+        //global variables
+        let sum = "";
+        const n = 100;
+        class Rewards {
+            constructor(total, points, date) {
+                this.total = total;
+                this.points = points;
+                this.date = date;
+            }
+        }
+
+        $(document).ready(function() {
+            let outputString = "";
+            for (let i = 0; i < n; i++) {
+                let date = getRandomDate(new Date("07-01-2020 00:00"), new Date("11-01-2020 00:00"));
+                let total = getRandomTotal(1, 1000);
+                let totalPoints = getPoints(total);
+                outputString += "<p>Date:" + date + ", Dollar Amount Spent: $" + total + ", Total Points Earned: " + totalPoints + "</p>";
+                //set to class so it can used for other functions
+            }
+            $("#output").html(outputString);
+        });
+
+        function getPoints(total) {
+            let totalPoints = 0;
+            if (total <= 50) {
+                return totalPoints;
+            }
+            if (total < 100) {
+                totalPoints = total - 50;
+            }
+            if (total >= 100) {
+                totalPoints = ((total - 100) * 2) + 50;
+            }
+            return totalPoints;
+        }
+
+        function getRandomTotal(min, max) {
+            let randomNum = Math.random() * (max - min) + min;
+            return Math.round(randomNum);
+        }
+
+        function getRandomDate(start, end) {
+            var diff = end.getTime() - start.getTime();
+            var new_diff = diff * Math.random();
+            var date = new Date(start.getTime() + new_diff).toLocaleDateString("en-US");
+            return date;
+        }
+    </script>
+</body>
+
+</html>
